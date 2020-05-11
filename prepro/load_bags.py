@@ -2,7 +2,8 @@
     load bags from dump file, generate bags feature
 
 """
-from get_bags import Instance
+
+from .get_bags import Instance
 import numpy as np
 import json
 import pickle
