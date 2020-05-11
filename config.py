@@ -23,7 +23,7 @@ class DefaultConfig(object):
     load_model_path = 'checkpoints/model.pth'  # the trained model
 
     seed = 3435
-    batch_size = 32  # batch size
+    batch_size = 128  # batch size
     use_gpu = True  # user GPU or not
     gpu_id = 0
     num_workers = 0  # how many workers for loading data

@@ -60,6 +60,13 @@ def train(**kwargs):
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
+        if epoch > 2:
+            # true_y, pred_y, pred_p= predict(model, test_data_loader)
+            # all_pre, all_rec = eval_metric(true_y, pred_y, pred_p)
+            pred_res, p_num = predict_var(model, test_data_loader)
+            all_pre, all_rec = eval_metric_var(pred_res, p_num)
+
+            last_pre, last_rec = all_pre[-1], all_rec[-1]
         print('{} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
 
     return
@@ -67,6 +74,63 @@ def train(**kwargs):
 
 def preidct(model, data):
     return
+
+
+def predict_var(model, test_data_loader):
+    '''
+    Apply the prediction method in  Lin 2016
+    '''
+    model.eval()
+
+    res = []
+    true_y = []
+    for idx, (data, labels) in enumerate(test_data_loader):
+        out = model(data)
+        true_y.extend(labels)
+        if opt.use_gpu:
+            #  out = map(lambda o: o.data.cpu().numpy().tolist(), out)
+            out = out.data.cpu().numpy().tolist()
+        else:
+            #  out = map(lambda o: o.data.numpy().tolist(), out)
+            out = out.data.numpy().tolist()
+
+        for r in range(1, opt.rel_num):
+            for j in range(len(out[0])):
+                res.append([labels[j], r, out[r][j]])
+
+        #  if idx % 100 == 99:
+            #  print('{} Eval: iter {}'.format(now(), idx))
+        exit(0)
+
+    model.train()
+    positive_num = len([i for i in true_y if i[0] > 0])
+    return res, positive_num
+
+
+def eval_metric_var(pred_res, p_num):
+    '''
+    Apply the evalation method in  Lin 2016
+    '''
+
+    pred_res_sort = sorted(pred_res, key=lambda x: -x[2])
+    correct = 0.0
+    all_pre = []
+    all_rec = []
+
+    for i in range(2000):
+        true_y = pred_res_sort[i][0]
+        pred_y = pred_res_sort[i][1]
+        for j in true_y:
+            if pred_y == j:
+                correct += 1
+                break
+        precision = correct / (i + 1)
+        recall = correct / p_num
+        all_pre.append(precision)
+        all_rec.append(recall)
+
+    print("positive_num: {};  correct: {}".format(p_num, correct))
+    return all_pre, all_rec
 
 
 if __name__ == "__main__":
