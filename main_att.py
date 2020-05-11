@@ -67,12 +67,12 @@ def train(**kwargs):
             all_pre, all_rec = eval_metric_var(pred_res, p_num)
 
             last_pre, last_rec = all_pre[-1], all_rec[-1]
-            print('{} Epoch {}/{}: train loss: {}; test precision: {}, test recall {}'.format(now(), epoch + 1,
+            print('test: {} Epoch {}/{}: train loss: {}; test precision: {}, test recall {}'.format(now(), epoch + 1,
                                                                                               opt.num_epochs,
                                                                                               total_loss, last_pre,
-                                                                                              last_rec))
+                                                                                  last_rec))
         else:
-            print('{} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
+            print('train {} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
 
     return
 
