@@ -132,10 +132,10 @@ def get_bags(filename, outfilename):
     pickle.dump(inst_list, inst_list_file)
     inst_list_file.close()
 
-    # bags_filename = OUT_DIR + "/bags_" + outfilename
-    # bags_file = open(bags_filename, 'w')
-    # json.dump(bags, bags_file)
-    # bags_file.close()
+    bags_filename = OUT_DIR + "/bags_" + outfilename
+    bags_file = open(bags_filename, 'w')
+    json.dump(bags, bags_file)
+    bags_file.close()
     return
 
 

@@ -2,8 +2,7 @@
     load bags from dump file, generate bags feature
 
 """
-from .tool import get_relation2id
-from .get_bags import Instance
+from get_bags import Instance
 import numpy as np
 import json
 import pickle
@@ -12,8 +11,8 @@ from collections import Counter
 
 MAX_POS = 50
 
-DATA_DIR = "D:/WSL/Intra-Bag-and-Inter-Bag-Attentions/NYT_data"
-OUT_DIR = "D:/WSL/output"
+DATA_DIR = "../dataset/NYT"
+OUT_DIR = "../dataset/OUT"
 we_filename = DATA_DIR + "/vec.bin"
 npy_filename = OUT_DIR + "/wv.npy"
 w2id_filename = OUT_DIR + "/word2id.json"
@@ -21,8 +20,17 @@ w2id_filename = OUT_DIR + "/word2id.json"
 train_filename = DATA_DIR + "/train.txt"
 test_filename = DATA_DIR + "/test.txt"
 
-relation2id = get_relation2id(OUT_DIR)
-print(relation2id)
+
+
+def get_relation2id(dir):
+    file = dir +"/relation2id.txt"
+    re2id = {}
+    with open(file) as f:
+        for line in f:
+            splits = line.strip().split()
+            re2id[splits[0]] = int(splits[1])
+    return re2id
+
 
 def pf(pos, ht, max_pf):
     pe = pos - ht
@@ -31,6 +39,10 @@ def pf(pos, ht, max_pf):
     if pe < 0:
         pe = max(pe, -max_pf)
     return pe
+
+
+relation2id = get_relation2id(OUT_DIR)
+print(relation2id)
 
 
 class Instance_Feature(object):
