@@ -10,18 +10,6 @@ import pickle
 
 from collections import Counter
 
-MAX_POS = 50
-
-DATA_DIR = "../dataset/NYT"
-OUT_DIR = "../dataset/OUT"
-we_filename = DATA_DIR + "/vec.bin"
-npy_filename = OUT_DIR + "/wv.npy"
-w2id_filename = OUT_DIR + "/word2id.json"
-
-train_filename = DATA_DIR + "/train.txt"
-test_filename = DATA_DIR + "/test.txt"
-
-
 
 def get_relation2id(dir):
     file = dir +"/relation2id.txt"
@@ -40,10 +28,6 @@ def pf(pos, ht, max_pf):
     if pe < 0:
         pe = max(pe, -max_pf)
     return pe
-
-
-relation2id = get_relation2id(OUT_DIR)
-print(relation2id)
 
 
 class Instance_Feature(object):
@@ -188,6 +172,18 @@ def load_bags(bags_filename):
 
 
 if __name__ == "__main__":
+    MAX_POS = 50
+
+    DATA_DIR = "../dataset/NYT"
+    OUT_DIR = "../dataset/OUT"
+    we_filename = DATA_DIR + "/vec.bin"
+    npy_filename = OUT_DIR + "/wv.npy"
+    w2id_filename = OUT_DIR + "/word2id.json"
+
+    train_filename = DATA_DIR + "/train.txt"
+    test_filename = DATA_DIR + "/test.txt"
+    relation2id = get_relation2id(OUT_DIR)
+    print(relation2id)
 
     train_inst_filename = OUT_DIR + "/inst_" + "train"
     test_inst_filename = OUT_DIR + "/inst_" + "test"

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-INPUT_DIR = "D:/WSL/output"
+INPUT_DIR = "dataset/OUT"
 
 data_dic ={
     'NYT': {
