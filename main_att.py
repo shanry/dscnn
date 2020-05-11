@@ -71,7 +71,8 @@ def train(**kwargs):
                                                                                               opt.num_epochs,
                                                                                               total_loss, last_pre,
                                                                                               last_rec))
-        print('{} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
+        else:
+            print('{} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
 
     return
 
