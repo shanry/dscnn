@@ -7,8 +7,8 @@ from gensim.models.keyedvectors import KeyedVectors
 
 import json
 
-DATA_DIR = "D:/WSL/Intra-Bag-and-Inter-Bag-Attentions/NYT_data"
-OUT_DIR = "D:/WSL/output"
+DATA_DIR = "../dataset/NYT"
+OUT_DIR = "../dataset/OUT"
 we_file = DATA_DIR + "/vec.bin"
 npy_file = OUT_DIR + "/wv.npy"
 w2id_file = OUT_DIR + "/word2id.json"

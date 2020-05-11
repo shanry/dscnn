@@ -2,7 +2,6 @@
     get bags from train.txt and test.txt
 
 """
-from .tool import get_relation2id
 
 
 import numpy as np
@@ -11,8 +10,18 @@ import pickle
 
 MAX_POS = 50
 
-DATA_DIR = "D:/WSL/Intra-Bag-and-Inter-Bag-Attentions/NYT_data"
-OUT_DIR = "D:/WSL/output"
+DATA_DIR = "../dataset/NYT"
+OUT_DIR = "../dataset/OUT"
+
+
+def get_relation2id(dir):
+    file = dir +"/relation2id.txt"
+    re2id = {}
+    with open(file) as f:
+        for line in f:
+            splits = line.strip().split()
+            re2id[splits[0]] = int(splits[1])
+    return re2id
 
 
 class Instance(object):
