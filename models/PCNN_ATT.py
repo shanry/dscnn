@@ -172,15 +172,15 @@ class PCNN_ATT(BasicModule):
             # out = F.softmax(out, 1)
             # pre_y.append(out[:, label])
             pre_y.append(out.unsqueeze(1))
-            if label == 2:
-                print("out.shape{}".format(out.shape))
-                print("out.unsqueeze(1).shape:{}".format(out.unsqueeze(1).shape))
+            # if label == 2:
+            #     print("out.shape{}".format(out.shape))
+            #     print("out.unsqueeze(1).shape:{}".format(out.unsqueeze(1).shape))
 
         # return pre_y
-        print("torch.cat(pre_y, 1).shape:{}".format(torch.cat(pre_y, 1).shape))
+        # print("torch.cat(pre_y, 1).shape:{}".format(torch.cat(pre_y, 1).shape))
         res = torch.cat(pre_y, 1).max(1)[0]  # batch_size * rel_num
-        print("res.shape:{}".format(res.shape))
-        return F.softmax(res, 1).t()  #
+        # print("res.shape:{}".format(res.shape))
+        return F.softmax(res, 1).t()
 
     def get_batch_feature(self, labels):
         '''
