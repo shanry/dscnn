@@ -31,7 +31,7 @@ class DefaultConfig(object):
     max_len = 80 + 2  # max_len for each sentence + two padding
     limit = 60  # the position range <-limit, limit>
 
-    vocab_size = data_dic[data]['vocab_size']  # vocab + UNK + BLANK
+    vocab_size = data_dic[data]['vocab_size'] + 1 # padding # vocab + UNK + BLANK
     rel_num = data_dic[data]['rel_num']
     word_dim = 50
     pos_dim = 5

@@ -110,7 +110,7 @@ def predict_var(model, test_data_loader):
         # exit(0)
 
     model.train()
-    positive_num = len([i for i in true_y if i > 0])
+    positive_num = len([i for i in true_y if i[0] > 0])
     return res, positive_num
 
 
@@ -127,6 +127,7 @@ def eval_metric_var(pred_res, p_num):
     for i in range(2000):
         true_y = pred_res_sort[i][0]
         pred_y = pred_res_sort[i][1]
+        # if true_y ==
         for j in true_y:
             if pred_y == j:
                 correct += 1
