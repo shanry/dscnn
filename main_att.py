@@ -60,15 +60,15 @@ def train(**kwargs):
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
-        if epoch > 2:
-            pred_res, p_num = predict_var(model, test_data_loader)
-            all_pre, all_rec = eval_metric_var(pred_res, p_num)
+        # if epoch >= 0:
+        pred_res, p_num = predict_var(model, test_data_loader)
+        all_pre, all_rec = eval_metric_var(pred_res, p_num)
 
-            last_pre, last_rec = all_pre[-1], all_rec[-1]
-            print('train {} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
-            print("last_pre:{}, last_rec:{}".format(last_pre, last_rec))
-        else:
-            print('train {} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
+        last_pre, last_rec = all_pre[-1], all_rec[-1]
+        print('train {} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
+        print("last_pre:{}, last_rec:{}".format(last_pre, last_rec))
+        # else:
+        #     print('train {} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
 
     return
 
@@ -98,12 +98,12 @@ def predict_var(model, test_data_loader):
         print("in predict_var out.shape:{}".format(out.shape))
 
         for r in range(1, opt.rel_num):
-            for j in range(len(out[0])):  # out: batch_size * rel_num
+            for j in range(len(out[0])):  # out:  rel_num*batch_size ?
                 res.append([labels[j], r, out[r][j]])
 
         #  if idx % 100 == 99:
             #  print('{} Eval: iter {}'.format(now(), idx))
-        print("in predict_var res.shape:{}".format((len(res), len(res[0]))))
+        print("in predict_var res.shape:{}".format((len(res), len(res[0])))) # batch_size*rel_num
         exit(0)
 
     model.train()
