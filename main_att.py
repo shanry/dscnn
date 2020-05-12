@@ -1,6 +1,6 @@
 from prepro import Instance_Feature
 
-from utils import now
+from utils import now, save_pr
 from config import opt
 import models
 import dataset
@@ -67,6 +67,9 @@ def train(**kwargs):
         last_pre, last_rec = all_pre[-1], all_rec[-1]
         print('train {} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
         print("last_pre:{}, last_rec:{}".format(last_pre, last_rec))
+        if last_pre > 0.24 and last_rec > 0.24:
+            save_pr(opt.result_dir, model.model_name, epoch, all_pre, all_rec, opt=opt.print_opt)
+            print('{} Epoch {} save pr'.format(now(), epoch + 1))
         # else:
         #     print('train {} Epoch {}/{}: train loss: {};'.format(now(), epoch + 1, opt.num_epochs, total_loss))
 
@@ -95,7 +98,7 @@ def predict_var(model, test_data_loader):
             #  out = map(lambda o: o.data.numpy().tolist(), out)
             out = out.data.numpy().tolist()
 
-        print("in predict_var out.shape:{}".format(out.shape))
+        # print("in predict_var out.shape:{}".format(out.shape))
 
         for r in range(1, opt.rel_num):
             for j in range(len(out[0])):  # out:  rel_num*batch_size ?
@@ -103,11 +106,11 @@ def predict_var(model, test_data_loader):
 
         #  if idx % 100 == 99:
             #  print('{} Eval: iter {}'.format(now(), idx))
-        print("in predict_var res.shape:{}".format((len(res), len(res[0])))) # batch_size*rel_num
-        exit(0)
+        # print("in predict_var res.shape:{}".format((len(res), len(res[0])))) # batch_size*rel_num
+        # exit(0)
 
     model.train()
-    positive_num = len([i for i in true_y if i[0] > 0])
+    positive_num = len([i for i in true_y if i > 0])
     return res, positive_num
 
 
